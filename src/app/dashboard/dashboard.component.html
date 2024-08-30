@@ -1,0 +1,35 @@
+<div class="row">
+    <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState(true)" (closed)="panelOpenState(false)">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div class="logos">
+                        <img src="assets/github-mark.svg" alt="">
+                        <img src="assets/GitHub_Logo.png" alt="">
+
+                    </div>
+                    <div class="status">
+                        <mat-icon *ngIf="userData.githubId" style="color:#41bb09">check_circle</mat-icon>
+                        <mat-icon (click)="updateToken($event);$event.stopPropagation();">restore</mat-icon>
+
+                    </div>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <div class="userstats">
+                        <span>Admin: Last Synced:{{ localDate | date:'yyyy-MM-dd hh:mm a' }}</span>
+                        <span>Sync Type:{{userData.syncType}}</span>
+ 
+                    </div>
+                 
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div style="text-align: end;padding: 10px;">
+                <button style="margin-bottom: 10px;"  color="primary" (click)="disconnect()"  mat-raised-button>Remove<mat-icon>remove_circle</mat-icon>
+                </button>
+            </div>
+
+            
+        </mat-expansion-panel>
+    </mat-accordion>
+
+</div>

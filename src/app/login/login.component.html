@@ -1,0 +1,25 @@
+<div class="row">
+    <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState(true)" (closed)="panelOpenState(false)">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div class="logos">
+                        <img src="assets/github-mark.svg" alt="">
+                        <img src="assets/GitHub_Logo.png" alt="">
+
+                    </div>
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div style="text-align: center;">
+                <button style="margin-bottom: 10px;"  color="primary" (click)="redirect()"  mat-raised-button>Connect</button>
+
+                <h1><strong>Connect Sredio to GitHub</strong> </h1>
+            </div>
+
+            
+        </mat-expansion-panel>
+    </mat-accordion>
+
+</div>
