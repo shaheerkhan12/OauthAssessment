@@ -33,3 +33,16 @@
     </mat-accordion>
 
 </div>
+
+<div>
+    <span>specify which products we are using</span>
+    <ag-grid-angular
+    style="width: 100%; height: 400px;padding: 18px;"
+    class="ag-theme-quartz"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    (rowSelected)="onRepoSelect($event)"
+    [defaultColDef]="defaultColDef"
+    
+    ></ag-grid-angular>
+    </div>

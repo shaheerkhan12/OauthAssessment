@@ -15,7 +15,8 @@ export class EndPointsConfig {
         TokenCallback: 'Token-Callback',
         detachSession: 'detach-session',
         userDetails: 'userDetails',
-
+        gitOrgans:'gitOrgans',
+        gitOrgansRepos:'repos'
 
       },
     };

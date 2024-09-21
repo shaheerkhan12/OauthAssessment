@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ColDef } from 'ag-grid-community';
 import { switchMap } from 'rxjs';
 import { UserData, removeObj } from 'src/core/models/requestModel';
 import { OauthApiService } from 'src/core/services/oauth-api.service';
@@ -24,10 +25,24 @@ export class DashboardComponent {
   };
   localDate: Date;
 
+  rowData: any[] = [];
+  columnDefs = [
+    { field: 'id', headerName: 'ID' },
+    { field: 'name', headerName: 'Name' },
+    { field: 'html_url', headerName: 'Link', cellRenderer: (params: { value: any; }) => `<a href="${params.value}" target="_blank">${params.value}</a>` },
+    { field: 'slug', headerName: 'Slug' },
+    { field: 'included', headerName: 'Included', checkboxSelection: true }
+  ];
+  defaultColDef: ColDef = {
+    flex: 1,
+  };
+  token: string;
   constructor(private OauthService: OauthApiService, private router: Router) {
     let data = this.OauthService.getData('Account-information');
     this.userData = data
     this.localDate = new Date(this.userData.lastSyncTime);
+    this.token = this.userData.accessToken ? this.userData.accessToken : '';
+    this.getUserOrganization()
   }
   panelOpenState(state: boolean) {
     this.panelState = state;
@@ -66,5 +81,22 @@ export class DashboardComponent {
         console.log('disconnection completed.');
       },
     });
+  }
+  getUserOrganization(){
+    this.OauthService.getOrganizations(this.token).subscribe((orgs: any) => {
+      orgs.forEach((org: any) => {
+        this.OauthService.getRepos(org.login,this.token).subscribe((repos: any) => {
+          this.rowData = [...this.rowData, ...repos];
+        });
+      });
+    });
+  }
+  onRepoSelect(event: any) {
+    const selectedRepo = event.data;
+    if (selectedRepo.included) {
+      this.OauthService.getCommits(selectedRepo.owner.login, selectedRepo.name,this.token).subscribe(commits => {
+        console.log('Commits for the selected repo:', commits);
+      });
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EndPointsConfig } from './endPoints.config';
 import { removeObj } from '../models/requestModel';
 
@@ -27,6 +27,29 @@ export class OauthApiService {
     return this.http.post(
       `${EndPointsConfig.ApiUrl.Url}${EndPointsConfig.Oauth.Controller}${EndPointsConfig.Oauth.EndPoints.detachSession}`,data
     )
+  }
+  getOrganizations(yourAuthToken:string) {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${yourAuthToken}`, 
+      'Content-Type': 'application/json' 
+    });
+    return this.http.get(`${EndPointsConfig.ApiUrl.Url}${EndPointsConfig.Oauth.Controller}${EndPointsConfig.Oauth.EndPoints.gitOrgans}`, { headers });
+  }
+
+  getRepos(org: string,yourAuthToken:string) {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${yourAuthToken}`,
+      'Content-Type': 'application/json' 
+    });
+    return this.http.get(`${EndPointsConfig.ApiUrl.Url}${EndPointsConfig.Oauth.Controller}${EndPointsConfig.Oauth.EndPoints.gitOrgans}/${org}/repos`, { headers });
+  }
+
+  getCommits(owner: string, repo: string,yourAuthToken:string) {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${yourAuthToken}`, 
+      'Content-Type': 'application/json' 
+    });
+    return this.http.get(`${EndPointsConfig.ApiUrl.Url}${EndPointsConfig.Oauth.Controller}${EndPointsConfig.Oauth.EndPoints.gitOrgansRepos}/${owner}/${repo}/commits`, { headers });
   }
    setData(key: string, value: any): void {
     localStorage.setItem(key, JSON.stringify(value));
