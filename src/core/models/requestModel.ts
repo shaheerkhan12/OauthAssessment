@@ -13,3 +13,10 @@ export  interface UserData {
     syncType: 'full' | 'incremental';
     lastSyncTime: Date;
   }
+export  interface UserStats {
+    userId: string;
+    userLogin: string;
+    totalCommits: number;
+    totalPullRequests: number;
+    totalIssues: number;
+  }
