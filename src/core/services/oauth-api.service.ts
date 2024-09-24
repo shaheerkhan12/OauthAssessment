@@ -36,12 +36,12 @@ export class OauthApiService {
     return this.http.get(`${EndPointsConfig.ApiUrl.Url}${EndPointsConfig.Oauth.Controller}${EndPointsConfig.Oauth.EndPoints.gitOrgans}`, { headers });
   }
 
-  getRepos(org: string,yourAuthToken:string) {
+  getRepos(orgs: any[],yourAuthToken:string) {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${yourAuthToken}`,
       'Content-Type': 'application/json' 
     });
-    return this.http.get(`${EndPointsConfig.ApiUrl.Url}${EndPointsConfig.Oauth.Controller}${EndPointsConfig.Oauth.EndPoints.gitOrgans}/${org}/repos`, { headers });
+    return this.http.post(`${EndPointsConfig.ApiUrl.Url}${EndPointsConfig.Oauth.Controller}${EndPointsConfig.Oauth.EndPoints.gitOrgans}/repos`,{orgs:orgs}, { headers });
   }
 
   getCommits(owner: string, repo: string,yourAuthToken:string) {
@@ -51,12 +51,12 @@ export class OauthApiService {
     });
     return this.http.get(`${EndPointsConfig.ApiUrl.Url}${EndPointsConfig.Oauth.Controller}${EndPointsConfig.Oauth.EndPoints.gitOrgansRepos}/${owner}/${repo}/commits`, { headers });
   }
-  getRepoData(org: string, repo: string,yourAuthToken:string) {
+  getRepoData(list: any[],yourAuthToken:string) {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${yourAuthToken}`, 
       'Content-Type': 'application/json' 
     });
-    return this.http.get(`${EndPointsConfig.ApiUrl.Url}${EndPointsConfig.Oauth.Controller}${EndPointsConfig.Oauth.EndPoints.gitOrgans}/repo/${org}/${repo}`, { headers });
+    return this.http.post(`${EndPointsConfig.ApiUrl.Url}${EndPointsConfig.Oauth.Controller}${EndPointsConfig.Oauth.EndPoints.gitOrgans}/repo/`,{list:list}, { headers });
   }
    setData(key: string, value: any): void {
     localStorage.setItem(key, JSON.stringify(value));
